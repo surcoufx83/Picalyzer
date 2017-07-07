@@ -3,7 +3,6 @@
 class Counter{
 
   public $Tens = array();
-  #public $Twins = array();
   public $Unified = array();
   private $Plate = 0;
   private $ImageCenter;
@@ -12,8 +11,6 @@ class Counter{
     $this->Plate = ($PlateType == null ? $PlateType = 0 : $PlateType);
     for ($i=0; $i<10; $i++) {
       $this->Tens[$i] = new Radiant();
-      #if ($i < 2)
-      #  $this->Twins[$i] = new Radiant();
       if ($i < 2)
         $this->Unified[$i] = array('NW' => 0, 'NE' => 0, 'SE' => 0, 'SW' => 0, 'C' => 0);
     }
@@ -26,7 +23,6 @@ class Counter{
     $_xmax -= 4;
     $_ymax -= 4;
     $c1Obj = null;
-    #$c2Obj = null;
     for ($x=2; $x<$_xmax; $x++) {
       for ($y=2; $y<$_ymax; $y++) {
         $dObj = $iObj->getImagePixelColor($x, $y);
@@ -36,117 +32,71 @@ class Counter{
           continue;
 
         $i1Dist = intval(floor($fDist / 10));
-        #$i2Dist = ($fDist < 66 ? 0 : 1);
 
         $xtest = $x - $this->ImageCenter[0];
         $ytest = $y - $this->ImageCenter[1];
 
-        if ($xtest < 0 && $ytest < 0) {
+        if ($xtest < 0 && $ytest < 0)
           $c1Obj =& $this->Tens[$i1Dist]->NW;
-          #$c2Obj =& $this->Twins[$i2Dist]->NW;
-        }
-        elseif ($xtest > 0 && $ytest < 0) {
+        elseif ($xtest > 0 && $ytest < 0)
           $c1Obj =& $this->Tens[$i1Dist]->NE;
-          #$c2Obj =& $this->Twins[$i2Dist]->NE;
-        }
-        elseif ($xtest > 0 && $ytest > 0) {
+        elseif ($xtest > 0 && $ytest > 0)
           $c1Obj =& $this->Tens[$i1Dist]->SE;
-          #$c2Obj =& $this->Twins[$i2Dist]->SE;
-        }
-        elseif ($xtest < 0 && $ytest > 0) {
+        elseif ($xtest < 0 && $ytest > 0)
           $c1Obj =& $this->Tens[$i1Dist]->SW;
-          #$c2Obj =& $this->Twins[$i2Dist]->SW;
-        }
-        else {
+        else
           $c1Obj =& $this->Tens[$i1Dist]->C;
-          #$c2Obj =& $this->Twins[$i2Dist]->C;
-        }
 
         $c1Obj->AddPixel($dColor);
-        #$c2Obj->AddPixel($dColor);
-
       }
     }
     for ($i=0; $i<10; $i++) {
       foreach ($this->Tens[$i] AS $key => $rObj) {
         $rObj->Update();
       }
-      /*if ($i < 2) {
-        foreach ($this->Twins[$i] AS $key => $rObj) {
-          $rObj->Update();
-        }
-      }*/
     }
 
     if ($this->Plate == 96) {
       $this->Unified[0]['NW'] = ceil(($this->Tens[0]->NW->Rating + $this->Tens[1]->NW->Rating + $this->Tens[2]->NW->Rating +
         $this->Tens[3]->NW->Rating + $this->Tens[4]->NW->Rating + $this->Tens[5]->NW->Rating + $this->Tens[6]->NW->Rating) / 7);
-      //$this->Unified[1]['NW'] = ceil(($this->Tens[6]->NW->Rating + $this->Tens[7]->NW->Rating) / 2);
       $this->Unified[1]['NW'] = ceil(($this->Tens[7]->NW->Rating + $this->Tens[8]->NW->Rating + $this->Tens[9]->NW->Rating) / 3);
 
       $this->Unified[0]['NE'] = ceil(($this->Tens[0]->NE->Rating + $this->Tens[1]->NE->Rating + $this->Tens[2]->NE->Rating +
         $this->Tens[3]->NE->Rating + $this->Tens[4]->NE->Rating + $this->Tens[5]->NE->Rating + $this->Tens[6]->NE->Rating) / 7);
-      //$this->Unified[1]['NE'] = ceil(($this->Tens[6]->NE->Rating + $this->Tens[7]->NE->Rating) / 2);
       $this->Unified[1]['NE'] = ceil(($this->Tens[7]->NE->Rating + $this->Tens[8]->NE->Rating + $this->Tens[9]->NE->Rating) / 3);
 
       $this->Unified[0]['SE'] = ceil(($this->Tens[0]->SE->Rating + $this->Tens[1]->SE->Rating + $this->Tens[2]->SE->Rating +
         $this->Tens[3]->SE->Rating + $this->Tens[4]->SE->Rating + $this->Tens[5]->SE->Rating + $this->Tens[6]->SE->Rating) / 7);
-      //$this->Unified[1]['SE'] = ceil(($this->Tens[6]->SE->Rating + $this->Tens[7]->SE->Rating) / 2);
       $this->Unified[1]['SE'] = ceil(($this->Tens[7]->SE->Rating + $this->Tens[8]->SE->Rating + $this->Tens[9]->SE->Rating) / 3);
 
       $this->Unified[0]['SW'] = ceil(($this->Tens[0]->SW->Rating + $this->Tens[1]->SW->Rating + $this->Tens[2]->SW->Rating +
         $this->Tens[3]->SW->Rating + $this->Tens[4]->SW->Rating + $this->Tens[5]->SW->Rating + $this->Tens[6]->SW->Rating) / 7);
-      //$this->Unified[1]['SW'] = ceil(($this->Tens[6]->SW->Rating + $this->Tens[7]->SW->Rating) / 2);
       $this->Unified[1]['SW'] = ceil(($this->Tens[7]->SW->Rating + $this->Tens[8]->SW->Rating + $this->Tens[9]->SW->Rating) / 3);
 
       $this->Unified[0]['C'] = ceil(($this->Tens[0]->C->Rating + $this->Tens[1]->C->Rating + $this->Tens[2]->C->Rating +
         $this->Tens[3]->C->Rating + $this->Tens[4]->C->Rating + $this->Tens[5]->C->Rating + $this->Tens[6]->C->Rating) / 7);
-      //$this->Unified[1]['C'] = ceil(($this->Tens[6]->C->Rating + $this->Tens[7]->C->Rating) / 2);
       $this->Unified[1]['C'] = ceil(($this->Tens[7]->C->Rating + $this->Tens[8]->C->Rating + $this->Tens[9]->C->Rating) / 3);
     } else {
       $this->Unified[0]['NW'] = ceil(($this->Tens[0]->NW->Rating + $this->Tens[1]->NW->Rating + $this->Tens[2]->NW->Rating +
         $this->Tens[3]->NW->Rating + $this->Tens[4]->NW->Rating + $this->Tens[5]->NW->Rating + $this->Tens[6]->NW->Rating + $this->Tens[7]->NW->Rating) / 8);
-      //$this->Unified[1]['NW'] = ceil(($this->Tens[6]->NW->Rating + $this->Tens[7]->NW->Rating) / 2);
       $this->Unified[1]['NW'] = ceil(($this->Tens[8]->NW->Rating + $this->Tens[9]->NW->Rating) / 2);
 
       $this->Unified[0]['NE'] = ceil(($this->Tens[0]->NE->Rating + $this->Tens[1]->NE->Rating + $this->Tens[2]->NE->Rating +
         $this->Tens[3]->NE->Rating + $this->Tens[4]->NE->Rating + $this->Tens[5]->NE->Rating + $this->Tens[6]->NE->Rating + $this->Tens[7]->NE->Rating) / 8);
-      //$this->Unified[1]['NE'] = ceil(($this->Tens[6]->NE->Rating + $this->Tens[7]->NE->Rating) / 2);
       $this->Unified[1]['NE'] = ceil(($this->Tens[8]->NE->Rating + $this->Tens[9]->NE->Rating) / 2);
 
       $this->Unified[0]['SE'] = ceil(($this->Tens[0]->SE->Rating + $this->Tens[1]->SE->Rating + $this->Tens[2]->SE->Rating +
         $this->Tens[3]->SE->Rating + $this->Tens[4]->SE->Rating + $this->Tens[5]->SE->Rating + $this->Tens[6]->SE->Rating + $this->Tens[7]->SE->Rating) / 8);
-      //$this->Unified[1]['SE'] = ceil(($this->Tens[6]->SE->Rating + $this->Tens[7]->SE->Rating) / 2);
       $this->Unified[1]['SE'] = ceil(($this->Tens[8]->SE->Rating + $this->Tens[9]->SE->Rating) / 2);
 
       $this->Unified[0]['SW'] = ceil(($this->Tens[0]->SW->Rating + $this->Tens[1]->SW->Rating + $this->Tens[2]->SW->Rating +
         $this->Tens[3]->SW->Rating + $this->Tens[4]->SW->Rating + $this->Tens[5]->SW->Rating + $this->Tens[6]->SW->Rating + $this->Tens[7]->SW->Rating) / 8);
-      //$this->Unified[1]['SW'] = ceil(($this->Tens[6]->SW->Rating + $this->Tens[7]->SW->Rating) / 2);
       $this->Unified[1]['SW'] = ceil(($this->Tens[8]->SW->Rating + $this->Tens[9]->SW->Rating) / 2);
 
       $this->Unified[0]['C'] = ceil(($this->Tens[0]->C->Rating + $this->Tens[1]->C->Rating + $this->Tens[2]->C->Rating +
         $this->Tens[3]->C->Rating + $this->Tens[4]->C->Rating + $this->Tens[5]->C->Rating + $this->Tens[6]->C->Rating + $this->Tens[7]->C->Rating) / 8);
-      //$this->Unified[1]['C'] = ceil(($this->Tens[6]->C->Rating + $this->Tens[7]->C->Rating) / 2);
       $this->Unified[1]['C'] = ceil(($this->Tens[8]->C->Rating + $this->Tens[9]->C->Rating) / 2);
     }
-
-
-
-    /*$this->Unified[0]['NE'] = ceil(($this->Tens[0]->NE->Rating + $this->Tens[1]->NE->Rating + $this->Tens[2]->NE->Rating +
-      $this->Tens[3]->NE->Rating + $this->Tens[4]->NE->Rating + $this->Tens[5]->NE->Rating + $this->Tens[6]->NE->Rating) / 7);
-    $this->Unified[1]['NE'] = ceil(($this->Tens[7]->NE->Rating + $this->Tens[8]->NE->Rating + $this->Tens[9]->NE->Rating) / 3);
-
-    $this->Unified[0]['SE'] = ceil(($this->Tens[0]->SE->Rating + $this->Tens[1]->SE->Rating + $this->Tens[2]->SE->Rating +
-      $this->Tens[3]->SE->Rating + $this->Tens[4]->SE->Rating + $this->Tens[5]->SE->Rating + $this->Tens[6]->SE->Rating) / 7);
-    $this->Unified[1]['SE'] = ceil(($this->Tens[7]->SE->Rating + $this->Tens[8]->SE->Rating + $this->Tens[9]->SE->Rating) / 3);
-
-    $this->Unified[0]['SW'] = ceil(($this->Tens[0]->SW->Rating + $this->Tens[1]->SW->Rating + $this->Tens[2]->SW->Rating +
-      $this->Tens[3]->SW->Rating + $this->Tens[4]->SW->Rating + $this->Tens[5]->SW->Rating + $this->Tens[6]->SW->Rating) / 7);
-    $this->Unified[1]['SW'] = ceil(($this->Tens[7]->SW->Rating + $this->Tens[8]->SW->Rating + $this->Tens[9]->SW->Rating) / 3);
-
-    $this->Unified[0]['C'] = ceil(($this->Tens[0]->C->Rating + $this->Tens[1]->C->Rating + $this->Tens[2]->C->Rating +
-      $this->Tens[3]->C->Rating + $this->Tens[4]->C->Rating + $this->Tens[5]->C->Rating + $this->Tens[6]->C->Rating) / 7);
-    $this->Unified[1]['C'] = ceil(($this->Tens[7]->C->Rating + $this->Tens[8]->C->Rating + $this->Tens[9]->C->Rating) / 3);*/
 
   }
 
