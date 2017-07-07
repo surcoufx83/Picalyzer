@@ -81,6 +81,7 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
         $htmlout .= '<img src="Work/'.$xData[$i].'" />';
         $htmlout .= '<img src="Work/'.str_replace('.PNG', '-working.png', $xData[$i]).'" />';
         copy('Work/'.$xData[$i], $tarfolder.'Work/'.$xData[$i]);
+        copy('Work/'.$xData[$i], $tarfolder.'Work/'.str_replace('.PNG', '-working.png', $xData[$i]));
 
         if (is_array($sp)) {
           for ($im = 0; $im<count($sp); $im++) {
