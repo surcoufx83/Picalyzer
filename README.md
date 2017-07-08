@@ -45,8 +45,8 @@ The colors used:
 ## Detecting the real well size
 ![Pattern with small well](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/96wellplate.png) As the defined detection radius in ZebraLab does not always match the real well borders large white areas around the animals tracked movement can appear (see left pattern). The script tries to get to the real movement zone (right pattern) as close as possible. Therefore the following rules have been implemented:
 1. From 8 directions (top center, top right, center right, bottom right, bottom center, bottom left, center left, top left) it moves towards the pictures center as long as:
-* A colored pixel (red, green or black) has been found and also :
-** the pixel behind is also colored
-** the pixel in front is also colored
-** the relative distance to the center is less then 98% (100% = half height of the picture)
-* or the relative distance to the center is less then 60% (100% = half height of the picture)
+  * A colored pixel (red, green or black) has been found and also :
+    * the pixel behind is also colored
+    * the pixel in front is also colored
+    * the relative distance to the center is less then 98% (100% = half height of the picture)
+  * or the relative distance to the center is less then 60% (100% = half height of the picture)
