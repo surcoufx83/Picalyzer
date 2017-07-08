@@ -20,7 +20,7 @@ On the results page you will have 4 pictures for each source picture.
 * The left one is the same as the source picture but cropped to the borders of the red tracking circle.
 * The second one is the working copy of the first image and that cropped by white borders with the black circle and cross placed on top.
 * The third picture shows you the activity zones where the fish swum. It's fragmented into the four directions (top left, top right, bottom right, bottom left) and ten circles of same size. Every zone get's filled by an activity color code (see below).
-* The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture. 96-well plates are separated after zone seven.
+* The last image is a simplified version of third picture with only two distance zones.
 
 ## Resulting activity levels
 The animals activity level in the output images and data is emphasized by four different colors. Internally they are represented by numbers.
@@ -71,7 +71,7 @@ To collect all movement data from the images, the script will run the following 
   * Moving
   * NotMoving
   * Total
-... and will be raised depending on the RGB color of the pixel:
+4. ... and will be raised depending on the RGB color of the pixel:
   * Black pixel:
     * Black + 1
     * NotEmpty + 1
@@ -92,4 +92,20 @@ To collect all movement data from the images, the script will run the following 
     * Empty + 1
     * NotMoving + 1
     * Total + 1
-4. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions.
+5. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions. The first matching rule of the following ruleset is applied (see ## Resulting activity levels for the level identifiers).
+  1. If no colored pixel has been found, then activity level 0.
+  2. If black (inactive) is greater than the sum of green and red, then activity level 0.
+  3. If empty is more than 90% of total, then activity 0.
+  4. If slow movement (green) and fast movement (red) are both above 33% of NotEmpty, then activity level 2.
+  5. If green is greater than red, then activity level 1.
+  6. Activity level 3.
+6. If the activity level is 1 or higher the following rules will be applied:
+  1. If NotEmpty is less then 20% of Total, then activity level = activity level - 2.
+  2. Else If NotEmpty is less then 40% of Total, then activity level = activity level - 1.
+  3. If activity level is below 1, then activity level is set to 1.
+7. Now as we have the activity level for all 40 zones (10 distance levels * 4 directions), it's time to calculate the activity levels for the simplified pattern:
+  * For the four directions in the inner zone the activity level is the weighted arithmetic median of the seven (96 well plate) / eight (other well plates) distance levels of the same direction.
+  * For the four directions in the outer zone the activity level is the weighted arithmetic median of the three (96 well plate) / two (other well plates) distance levels of the same direction.
+
+## Finishing
+After all calculations, the images gets drawn into the *Work* directory and displayed on the website. A copy of all data, including the website, is copied to the *__Olds* directory where you can find all your old data and pictures so there's no need to rerun the same images a second time.
