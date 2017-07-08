@@ -127,29 +127,6 @@ class Counter{
     return null;
   }
 
-  /*function GetTwinsColor(int $x, int $y) {
-    $fDist = $this->_getDistance($x, $y);
-    if ($fDist > 99)
-      return null;
-    $i1Dist = ($fDist < 66 ? 0 : 1);
-
-    $xtest = $x - $this->ImageCenter[0];
-    $ytest = $y - $this->ImageCenter[1];
-
-    if ($xtest < 0 && $ytest < 0)
-      return $this->Twins[$i1Dist]->NW->Color;
-    elseif ($xtest > 0 && $ytest < 0)
-      return $this->Twins[$i1Dist]->NE->Color;
-    elseif ($xtest > 0 && $ytest > 0)
-      return $this->Twins[$i1Dist]->SE->Color;
-    elseif ($xtest < 0 && $ytest > 0)
-      return $this->Twins[$i1Dist]->SW->Color;
-    else
-      return $this->Twins[$i1Dist]->C->Color;
-
-    return null;
-  }*/
-
   function GetPixelData(int $x, int $y) {
     $fDist = $this->_getDistance($x, $y);
     if ($fDist > 99)
@@ -217,25 +194,40 @@ class Direction {
   }
 
   function Update() {
-    //$this->Opacity = ($this->Total == 0 ? 1.0 : $this->NotEmpty / $this->Total);
-
     if ($this->NotEmpty == 0 ||
       $this->Black > ($this->Green + $this->Red) ||
-      $this->Empty > ($this->Green + $this->Red)) {
+      ($this->Empty / ($this->NotEmpty + $this->Empty)) > 0.9) {
       return;
     } else {
       $mpr = $this->NotEmpty / 3;
       if ($this->Green > $mpr && $this->Red > $mpr) {
-        $this->Color = '#555555';
         $this->Rating = 2;
       }
       elseif ($this->Green > $this->Red) {
-        $this->Color = '#AAAAAA';
         $this->Rating = 1;
       }
       else {
-        $this->Color = '#000000';
         $this->Rating = 3;
+      }
+      if ($this->NotEmpty / ($this->NotEmpty + $this->Empty) < 0.2)
+        $this->Rating -= 2;
+      elseif ($this->NotEmpty / ($this->NotEmpty + $this->Empty) < 0.4)
+        $this->Rating -= 1;
+      if ($this->Rating < 1)
+        $this->Rating = 1;
+      switch($this->Rating) {
+        case 0:
+          $this->Color = COL_EMPTY;
+          return;
+        case 1:
+          $this->Color = COL_SLOW;
+          return;
+        case 2:
+          $this->Color = COL_MIXED;
+          return;
+        case 3:
+          $this->Color = COL_FAST;
+          return;
       }
     }
   }
