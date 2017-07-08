@@ -20,13 +20,13 @@ On the results page you will have 4 pictures for each source picture.
 * The left one is the same as the source picture but cropped to the borders of the red tracking circle.
 * The second one is the working copy of the first image and that cropped by white borders with the black circle and cross placed on top.
 * The third picture shows you the activity zones where the fish swum. It's fragmented into the four directions (north-west, north-east, south-east and south-west) and ten circles of same size. Every zone get's filled by an activity color code (see below).
-* The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture.
+* The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture. 96-well plates are separated after zone seven.
 
 The colors used:
 * White (#FFFFFF) - (Almost) no activity
 * Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
 * Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
-* Black - High activity with fast movement
+* Black (#000000) - High activity with fast movement
 
 ## Result patterns with very low activity
 ![Pattern with almost no activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/NoActivity.png)
@@ -43,3 +43,4 @@ The colors used:
 # Calculations
 
 ## Detecting the real well size
+![Pattern with small well](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/96wellplate.png)As the defined detection radius in ZebraLab not always matches the real well borders there can be large white areas around the animals tracked movement.

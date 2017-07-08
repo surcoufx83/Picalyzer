@@ -72,7 +72,7 @@ class Counter{
           $this->Tens[3]->NW->Total +
           $this->Tens[4]->NW->Total +
           $this->Tens[5]->NW->Total +
-          $this->Tens[6]->NW->Total)
+          $this->Tens[6]->NW->Total + 1)
       );
 
       $this->Unified[0]['NE'] = round(
@@ -89,7 +89,7 @@ class Counter{
           $this->Tens[3]->NE->Total +
           $this->Tens[4]->NE->Total +
           $this->Tens[5]->NE->Total +
-          $this->Tens[6]->NE->Total)
+          $this->Tens[6]->NE->Total + 1)
       );
 
       $this->Unified[0]['SE'] = round(
@@ -106,7 +106,7 @@ class Counter{
           $this->Tens[3]->SE->Total +
           $this->Tens[4]->SE->Total +
           $this->Tens[5]->SE->Total +
-          $this->Tens[6]->SE->Total)
+          $this->Tens[6]->SE->Total + 1)
       );
 
       $this->Unified[0]['SW'] = round(
@@ -123,7 +123,7 @@ class Counter{
           $this->Tens[3]->SW->Total +
           $this->Tens[4]->SW->Total +
           $this->Tens[5]->SW->Total +
-          $this->Tens[6]->SW->Total)
+          $this->Tens[6]->SW->Total + 1)
       );
 
       $this->Unified[0]['C'] = round(
@@ -140,7 +140,7 @@ class Counter{
           $this->Tens[3]->C->Total +
           $this->Tens[4]->C->Total +
           $this->Tens[5]->C->Total +
-          $this->Tens[6]->C->Total)
+          $this->Tens[6]->C->Total + 1)
       );
 
       $this->Unified[1]['NW'] = round(
@@ -149,7 +149,7 @@ class Counter{
         $this->Tens[9]->NW->Rating * $this->Tens[9]->NW->Total) /
           ($this->Tens[7]->NW->Total +
           $this->Tens[8]->NW->Total +
-          $this->Tens[9]->NW->Total)
+          $this->Tens[9]->NW->Total + 1)
       );
 
       $this->Unified[1]['NE'] = round(
@@ -158,7 +158,7 @@ class Counter{
         $this->Tens[9]->NE->Rating * $this->Tens[9]->NE->Total) /
           ($this->Tens[7]->NE->Total +
           $this->Tens[8]->NE->Total +
-          $this->Tens[9]->NE->Total)
+          $this->Tens[9]->NE->Total + 1)
       );
 
       $this->Unified[1]['SE'] = round(
@@ -167,7 +167,7 @@ class Counter{
         $this->Tens[9]->SE->Rating * $this->Tens[9]->SE->Total) /
           ($this->Tens[7]->SE->Total +
           $this->Tens[8]->SE->Total +
-          $this->Tens[9]->SE->Total)
+          $this->Tens[9]->SE->Total + 1)
       );
 
       $this->Unified[1]['SW'] = round(
@@ -176,7 +176,7 @@ class Counter{
         $this->Tens[9]->SW->Rating * $this->Tens[9]->SW->Total) /
           ($this->Tens[7]->SW->Total +
           $this->Tens[8]->SW->Total +
-          $this->Tens[9]->SW->Total)
+          $this->Tens[9]->SW->Total + 1)
       );
 
       $this->Unified[1]['C'] = round(
@@ -185,7 +185,7 @@ class Counter{
         $this->Tens[9]->C->Rating * $this->Tens[9]->C->Total) /
           ($this->Tens[7]->C->Total +
           $this->Tens[8]->C->Total +
-          $this->Tens[9]->C->Total)
+          $this->Tens[9]->C->Total + 1)
       );
 
     } else {
@@ -206,7 +206,7 @@ class Counter{
           $this->Tens[4]->NW->Total +
           $this->Tens[5]->NW->Total +
           $this->Tens[6]->NW->Total +
-          $this->Tens[7]->NW->Total)
+          $this->Tens[7]->NW->Total + 1)
       );
 
       $this->Unified[0]['NE'] = round(
@@ -225,7 +225,7 @@ class Counter{
           $this->Tens[4]->NE->Total +
           $this->Tens[5]->NE->Total +
           $this->Tens[6]->NE->Total +
-          $this->Tens[7]->NE->Total)
+          $this->Tens[7]->NE->Total + 1)
       );
 
       $this->Unified[0]['SE'] = round(
@@ -244,7 +244,7 @@ class Counter{
           $this->Tens[4]->SE->Total +
           $this->Tens[5]->SE->Total +
           $this->Tens[6]->SE->Total +
-          $this->Tens[7]->SE->Total)
+          $this->Tens[7]->SE->Total + 1)
       );
 
       $this->Unified[0]['SW'] = round(
@@ -263,7 +263,7 @@ class Counter{
           $this->Tens[4]->SW->Total +
           $this->Tens[5]->SW->Total +
           $this->Tens[6]->SW->Total +
-          $this->Tens[7]->SW->Total)
+          $this->Tens[7]->SW->Total + 1)
       );
 
       $this->Unified[0]['C'] = round(
@@ -282,42 +282,42 @@ class Counter{
           $this->Tens[4]->C->Total +
           $this->Tens[5]->C->Total +
           $this->Tens[6]->C->Total +
-          $this->Tens[7]->C->Total)
+          $this->Tens[7]->C->Total + 1)
       );
 
       $this->Unified[1]['NW'] = round(
         ($this->Tens[8]->NW->Rating * $this->Tens[8]->NW->Total +
         $this->Tens[9]->NW->Rating * $this->Tens[9]->NW->Total) /
           ($this->Tens[8]->NW->Total +
-          $this->Tens[9]->NW->Total)
+          $this->Tens[9]->NW->Total + 1)
       );
 
       $this->Unified[1]['NE'] = round(
         ($this->Tens[8]->NE->Rating * $this->Tens[8]->NE->Total +
         $this->Tens[9]->NE->Rating * $this->Tens[9]->NE->Total) /
           ($this->Tens[8]->NE->Total +
-          $this->Tens[9]->NE->Total)
+          $this->Tens[9]->NE->Total + 1)
       );
 
       $this->Unified[1]['SE'] = round(
         ($this->Tens[8]->SE->Rating * $this->Tens[8]->SE->Total +
         $this->Tens[9]->SE->Rating * $this->Tens[9]->SE->Total) /
           ($this->Tens[8]->SE->Total +
-          $this->Tens[9]->SE->Total)
+          $this->Tens[9]->SE->Total + 1)
       );
 
       $this->Unified[1]['SW'] = round(
         ($this->Tens[8]->SW->Rating * $this->Tens[8]->SW->Total +
         $this->Tens[9]->SW->Rating * $this->Tens[9]->SW->Total) /
           ($this->Tens[8]->SW->Total +
-          $this->Tens[9]->SW->Total)
+          $this->Tens[9]->SW->Total + 1)
       );
 
       $this->Unified[1]['C'] = round(
         ($this->Tens[8]->C->Rating * $this->Tens[8]->C->Total +
         $this->Tens[9]->C->Rating * $this->Tens[9]->C->Total) /
           ($this->Tens[8]->C->Total +
-          $this->Tens[9]->C->Total)
+          $this->Tens[9]->C->Total + 1)
       );
 
     }
