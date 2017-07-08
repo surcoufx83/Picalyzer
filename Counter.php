@@ -57,45 +57,269 @@ class Counter{
     }
 
     if ($this->Plate == 96) {
-      $this->Unified[0]['NW'] = ceil(($this->Tens[0]->NW->Rating + $this->Tens[1]->NW->Rating + $this->Tens[2]->NW->Rating +
-        $this->Tens[3]->NW->Rating + $this->Tens[4]->NW->Rating + $this->Tens[5]->NW->Rating + $this->Tens[6]->NW->Rating) / 7);
-      $this->Unified[1]['NW'] = ceil(($this->Tens[7]->NW->Rating + $this->Tens[8]->NW->Rating + $this->Tens[9]->NW->Rating) / 3);
 
-      $this->Unified[0]['NE'] = ceil(($this->Tens[0]->NE->Rating + $this->Tens[1]->NE->Rating + $this->Tens[2]->NE->Rating +
-        $this->Tens[3]->NE->Rating + $this->Tens[4]->NE->Rating + $this->Tens[5]->NE->Rating + $this->Tens[6]->NE->Rating) / 7);
-      $this->Unified[1]['NE'] = ceil(($this->Tens[7]->NE->Rating + $this->Tens[8]->NE->Rating + $this->Tens[9]->NE->Rating) / 3);
+      $this->Unified[0]['NW'] = round(
+        ($this->Tens[0]->NW->Rating * $this->Tens[0]->NW->Total +
+        $this->Tens[1]->NW->Rating * $this->Tens[1]->NW->Total +
+        $this->Tens[2]->NW->Rating * $this->Tens[2]->NW->Total +
+        $this->Tens[3]->NW->Rating * $this->Tens[3]->NW->Total +
+        $this->Tens[4]->NW->Rating * $this->Tens[4]->NW->Total +
+        $this->Tens[5]->NW->Rating * $this->Tens[5]->NW->Total +
+        $this->Tens[6]->NW->Rating * $this->Tens[6]->NW->Total) /
+          ($this->Tens[0]->NW->Total +
+          $this->Tens[1]->NW->Total +
+          $this->Tens[2]->NW->Total +
+          $this->Tens[3]->NW->Total +
+          $this->Tens[4]->NW->Total +
+          $this->Tens[5]->NW->Total +
+          $this->Tens[6]->NW->Total)
+      );
 
-      $this->Unified[0]['SE'] = ceil(($this->Tens[0]->SE->Rating + $this->Tens[1]->SE->Rating + $this->Tens[2]->SE->Rating +
-        $this->Tens[3]->SE->Rating + $this->Tens[4]->SE->Rating + $this->Tens[5]->SE->Rating + $this->Tens[6]->SE->Rating) / 7);
-      $this->Unified[1]['SE'] = ceil(($this->Tens[7]->SE->Rating + $this->Tens[8]->SE->Rating + $this->Tens[9]->SE->Rating) / 3);
+      $this->Unified[0]['NE'] = round(
+        ($this->Tens[0]->NE->Rating * $this->Tens[0]->NE->Total +
+        $this->Tens[1]->NE->Rating * $this->Tens[1]->NE->Total +
+        $this->Tens[2]->NE->Rating * $this->Tens[2]->NE->Total +
+        $this->Tens[3]->NE->Rating * $this->Tens[3]->NE->Total +
+        $this->Tens[4]->NE->Rating * $this->Tens[4]->NE->Total +
+        $this->Tens[5]->NE->Rating * $this->Tens[5]->NE->Total +
+        $this->Tens[6]->NE->Rating * $this->Tens[6]->NE->Total) /
+          ($this->Tens[0]->NE->Total +
+          $this->Tens[1]->NE->Total +
+          $this->Tens[2]->NE->Total +
+          $this->Tens[3]->NE->Total +
+          $this->Tens[4]->NE->Total +
+          $this->Tens[5]->NE->Total +
+          $this->Tens[6]->NE->Total)
+      );
 
-      $this->Unified[0]['SW'] = ceil(($this->Tens[0]->SW->Rating + $this->Tens[1]->SW->Rating + $this->Tens[2]->SW->Rating +
-        $this->Tens[3]->SW->Rating + $this->Tens[4]->SW->Rating + $this->Tens[5]->SW->Rating + $this->Tens[6]->SW->Rating) / 7);
-      $this->Unified[1]['SW'] = ceil(($this->Tens[7]->SW->Rating + $this->Tens[8]->SW->Rating + $this->Tens[9]->SW->Rating) / 3);
+      $this->Unified[0]['SE'] = round(
+        ($this->Tens[0]->SE->Rating * $this->Tens[0]->SE->Total +
+        $this->Tens[1]->SE->Rating * $this->Tens[1]->SE->Total +
+        $this->Tens[2]->SE->Rating * $this->Tens[2]->SE->Total +
+        $this->Tens[3]->SE->Rating * $this->Tens[3]->SE->Total +
+        $this->Tens[4]->SE->Rating * $this->Tens[4]->SE->Total +
+        $this->Tens[5]->SE->Rating * $this->Tens[5]->SE->Total +
+        $this->Tens[6]->SE->Rating * $this->Tens[6]->SE->Total) /
+          ($this->Tens[0]->SE->Total +
+          $this->Tens[1]->SE->Total +
+          $this->Tens[2]->SE->Total +
+          $this->Tens[3]->SE->Total +
+          $this->Tens[4]->SE->Total +
+          $this->Tens[5]->SE->Total +
+          $this->Tens[6]->SE->Total)
+      );
 
-      $this->Unified[0]['C'] = ceil(($this->Tens[0]->C->Rating + $this->Tens[1]->C->Rating + $this->Tens[2]->C->Rating +
-        $this->Tens[3]->C->Rating + $this->Tens[4]->C->Rating + $this->Tens[5]->C->Rating + $this->Tens[6]->C->Rating) / 7);
-      $this->Unified[1]['C'] = ceil(($this->Tens[7]->C->Rating + $this->Tens[8]->C->Rating + $this->Tens[9]->C->Rating) / 3);
+      $this->Unified[0]['SW'] = round(
+        ($this->Tens[0]->SW->Rating * $this->Tens[0]->SW->Total +
+        $this->Tens[1]->SW->Rating * $this->Tens[1]->SW->Total +
+        $this->Tens[2]->SW->Rating * $this->Tens[2]->SW->Total +
+        $this->Tens[3]->SW->Rating * $this->Tens[3]->SW->Total +
+        $this->Tens[4]->SW->Rating * $this->Tens[4]->SW->Total +
+        $this->Tens[5]->SW->Rating * $this->Tens[5]->SW->Total +
+        $this->Tens[6]->SW->Rating * $this->Tens[6]->SW->Total) /
+          ($this->Tens[0]->SW->Total +
+          $this->Tens[1]->SW->Total +
+          $this->Tens[2]->SW->Total +
+          $this->Tens[3]->SW->Total +
+          $this->Tens[4]->SW->Total +
+          $this->Tens[5]->SW->Total +
+          $this->Tens[6]->SW->Total)
+      );
+
+      $this->Unified[0]['C'] = round(
+        ($this->Tens[0]->C->Rating * $this->Tens[0]->C->Total +
+        $this->Tens[1]->C->Rating * $this->Tens[1]->C->Total +
+        $this->Tens[2]->C->Rating * $this->Tens[2]->C->Total +
+        $this->Tens[3]->C->Rating * $this->Tens[3]->C->Total +
+        $this->Tens[4]->C->Rating * $this->Tens[4]->C->Total +
+        $this->Tens[5]->C->Rating * $this->Tens[5]->C->Total +
+        $this->Tens[6]->C->Rating * $this->Tens[6]->C->Total) /
+          ($this->Tens[0]->C->Total +
+          $this->Tens[1]->C->Total +
+          $this->Tens[2]->C->Total +
+          $this->Tens[3]->C->Total +
+          $this->Tens[4]->C->Total +
+          $this->Tens[5]->C->Total +
+          $this->Tens[6]->C->Total)
+      );
+
+      $this->Unified[1]['NW'] = round(
+        ($this->Tens[7]->NW->Rating * $this->Tens[7]->NW->Total +
+        $this->Tens[8]->NW->Rating * $this->Tens[8]->NW->Total +
+        $this->Tens[9]->NW->Rating * $this->Tens[9]->NW->Total) /
+          ($this->Tens[7]->NW->Total +
+          $this->Tens[8]->NW->Total +
+          $this->Tens[9]->NW->Total)
+      );
+
+      $this->Unified[1]['NE'] = round(
+        ($this->Tens[7]->NE->Rating * $this->Tens[7]->NE->Total +
+        $this->Tens[8]->NE->Rating * $this->Tens[8]->NE->Total +
+        $this->Tens[9]->NE->Rating * $this->Tens[9]->NE->Total) /
+          ($this->Tens[7]->NE->Total +
+          $this->Tens[8]->NE->Total +
+          $this->Tens[9]->NE->Total)
+      );
+
+      $this->Unified[1]['SE'] = round(
+        ($this->Tens[7]->SE->Rating * $this->Tens[7]->SE->Total +
+        $this->Tens[8]->SE->Rating * $this->Tens[8]->SE->Total +
+        $this->Tens[9]->SE->Rating * $this->Tens[9]->SE->Total) /
+          ($this->Tens[7]->SE->Total +
+          $this->Tens[8]->SE->Total +
+          $this->Tens[9]->SE->Total)
+      );
+
+      $this->Unified[1]['SW'] = round(
+        ($this->Tens[7]->SW->Rating * $this->Tens[7]->SW->Total +
+        $this->Tens[8]->SW->Rating * $this->Tens[8]->SW->Total +
+        $this->Tens[9]->SW->Rating * $this->Tens[9]->SW->Total) /
+          ($this->Tens[7]->SW->Total +
+          $this->Tens[8]->SW->Total +
+          $this->Tens[9]->SW->Total)
+      );
+
+      $this->Unified[1]['C'] = round(
+        ($this->Tens[7]->C->Rating * $this->Tens[7]->C->Total +
+        $this->Tens[8]->C->Rating * $this->Tens[8]->C->Total +
+        $this->Tens[9]->C->Rating * $this->Tens[9]->C->Total) /
+          ($this->Tens[7]->C->Total +
+          $this->Tens[8]->C->Total +
+          $this->Tens[9]->C->Total)
+      );
+
     } else {
-      $this->Unified[0]['NW'] = ceil(($this->Tens[0]->NW->Rating + $this->Tens[1]->NW->Rating + $this->Tens[2]->NW->Rating +
-        $this->Tens[3]->NW->Rating + $this->Tens[4]->NW->Rating + $this->Tens[5]->NW->Rating + $this->Tens[6]->NW->Rating + $this->Tens[7]->NW->Rating) / 8);
-      $this->Unified[1]['NW'] = ceil(($this->Tens[8]->NW->Rating + $this->Tens[9]->NW->Rating) / 2);
 
-      $this->Unified[0]['NE'] = ceil(($this->Tens[0]->NE->Rating + $this->Tens[1]->NE->Rating + $this->Tens[2]->NE->Rating +
-        $this->Tens[3]->NE->Rating + $this->Tens[4]->NE->Rating + $this->Tens[5]->NE->Rating + $this->Tens[6]->NE->Rating + $this->Tens[7]->NE->Rating) / 8);
-      $this->Unified[1]['NE'] = ceil(($this->Tens[8]->NE->Rating + $this->Tens[9]->NE->Rating) / 2);
+      $this->Unified[0]['NW'] = round(
+        ($this->Tens[0]->NW->Rating * $this->Tens[0]->NW->Total +
+        $this->Tens[1]->NW->Rating * $this->Tens[1]->NW->Total +
+        $this->Tens[2]->NW->Rating * $this->Tens[2]->NW->Total +
+        $this->Tens[3]->NW->Rating * $this->Tens[3]->NW->Total +
+        $this->Tens[4]->NW->Rating * $this->Tens[4]->NW->Total +
+        $this->Tens[5]->NW->Rating * $this->Tens[5]->NW->Total +
+        $this->Tens[6]->NW->Rating * $this->Tens[6]->NW->Total +
+        $this->Tens[7]->NW->Rating * $this->Tens[7]->NW->Total) /
+          ($this->Tens[0]->NW->Total +
+          $this->Tens[1]->NW->Total +
+          $this->Tens[2]->NW->Total +
+          $this->Tens[3]->NW->Total +
+          $this->Tens[4]->NW->Total +
+          $this->Tens[5]->NW->Total +
+          $this->Tens[6]->NW->Total +
+          $this->Tens[7]->NW->Total)
+      );
 
-      $this->Unified[0]['SE'] = ceil(($this->Tens[0]->SE->Rating + $this->Tens[1]->SE->Rating + $this->Tens[2]->SE->Rating +
-        $this->Tens[3]->SE->Rating + $this->Tens[4]->SE->Rating + $this->Tens[5]->SE->Rating + $this->Tens[6]->SE->Rating + $this->Tens[7]->SE->Rating) / 8);
-      $this->Unified[1]['SE'] = ceil(($this->Tens[8]->SE->Rating + $this->Tens[9]->SE->Rating) / 2);
+      $this->Unified[0]['NE'] = round(
+        ($this->Tens[0]->NE->Rating * $this->Tens[0]->NE->Total +
+        $this->Tens[1]->NE->Rating * $this->Tens[1]->NE->Total +
+        $this->Tens[2]->NE->Rating * $this->Tens[2]->NE->Total +
+        $this->Tens[3]->NE->Rating * $this->Tens[3]->NE->Total +
+        $this->Tens[4]->NE->Rating * $this->Tens[4]->NE->Total +
+        $this->Tens[5]->NE->Rating * $this->Tens[5]->NE->Total +
+        $this->Tens[6]->NE->Rating * $this->Tens[6]->NE->Total +
+        $this->Tens[7]->NE->Rating * $this->Tens[7]->NE->Total) /
+          ($this->Tens[0]->NE->Total +
+          $this->Tens[1]->NE->Total +
+          $this->Tens[2]->NE->Total +
+          $this->Tens[3]->NE->Total +
+          $this->Tens[4]->NE->Total +
+          $this->Tens[5]->NE->Total +
+          $this->Tens[6]->NE->Total +
+          $this->Tens[7]->NE->Total)
+      );
 
-      $this->Unified[0]['SW'] = ceil(($this->Tens[0]->SW->Rating + $this->Tens[1]->SW->Rating + $this->Tens[2]->SW->Rating +
-        $this->Tens[3]->SW->Rating + $this->Tens[4]->SW->Rating + $this->Tens[5]->SW->Rating + $this->Tens[6]->SW->Rating + $this->Tens[7]->SW->Rating) / 8);
-      $this->Unified[1]['SW'] = ceil(($this->Tens[8]->SW->Rating + $this->Tens[9]->SW->Rating) / 2);
+      $this->Unified[0]['SE'] = round(
+        ($this->Tens[0]->SE->Rating * $this->Tens[0]->SE->Total +
+        $this->Tens[1]->SE->Rating * $this->Tens[1]->SE->Total +
+        $this->Tens[2]->SE->Rating * $this->Tens[2]->SE->Total +
+        $this->Tens[3]->SE->Rating * $this->Tens[3]->SE->Total +
+        $this->Tens[4]->SE->Rating * $this->Tens[4]->SE->Total +
+        $this->Tens[5]->SE->Rating * $this->Tens[5]->SE->Total +
+        $this->Tens[6]->SE->Rating * $this->Tens[6]->SE->Total +
+        $this->Tens[7]->SE->Rating * $this->Tens[7]->SE->Total) /
+          ($this->Tens[0]->SE->Total +
+          $this->Tens[1]->SE->Total +
+          $this->Tens[2]->SE->Total +
+          $this->Tens[3]->SE->Total +
+          $this->Tens[4]->SE->Total +
+          $this->Tens[5]->SE->Total +
+          $this->Tens[6]->SE->Total +
+          $this->Tens[7]->SE->Total)
+      );
 
-      $this->Unified[0]['C'] = ceil(($this->Tens[0]->C->Rating + $this->Tens[1]->C->Rating + $this->Tens[2]->C->Rating +
-        $this->Tens[3]->C->Rating + $this->Tens[4]->C->Rating + $this->Tens[5]->C->Rating + $this->Tens[6]->C->Rating + $this->Tens[7]->C->Rating) / 8);
-      $this->Unified[1]['C'] = ceil(($this->Tens[8]->C->Rating + $this->Tens[9]->C->Rating) / 2);
+      $this->Unified[0]['SW'] = round(
+        ($this->Tens[0]->SW->Rating * $this->Tens[0]->SW->Total +
+        $this->Tens[1]->SW->Rating * $this->Tens[1]->SW->Total +
+        $this->Tens[2]->SW->Rating * $this->Tens[2]->SW->Total +
+        $this->Tens[3]->SW->Rating * $this->Tens[3]->SW->Total +
+        $this->Tens[4]->SW->Rating * $this->Tens[4]->SW->Total +
+        $this->Tens[5]->SW->Rating * $this->Tens[5]->SW->Total +
+        $this->Tens[6]->SW->Rating * $this->Tens[6]->SW->Total +
+        $this->Tens[7]->SW->Rating * $this->Tens[7]->SW->Total) /
+          ($this->Tens[0]->SW->Total +
+          $this->Tens[1]->SW->Total +
+          $this->Tens[2]->SW->Total +
+          $this->Tens[3]->SW->Total +
+          $this->Tens[4]->SW->Total +
+          $this->Tens[5]->SW->Total +
+          $this->Tens[6]->SW->Total +
+          $this->Tens[7]->SW->Total)
+      );
+
+      $this->Unified[0]['C'] = round(
+        ($this->Tens[0]->C->Rating * $this->Tens[0]->C->Total +
+        $this->Tens[1]->C->Rating * $this->Tens[1]->C->Total +
+        $this->Tens[2]->C->Rating * $this->Tens[2]->C->Total +
+        $this->Tens[3]->C->Rating * $this->Tens[3]->C->Total +
+        $this->Tens[4]->C->Rating * $this->Tens[4]->C->Total +
+        $this->Tens[5]->C->Rating * $this->Tens[5]->C->Total +
+        $this->Tens[6]->C->Rating * $this->Tens[6]->C->Total +
+        $this->Tens[7]->C->Rating * $this->Tens[7]->C->Total) /
+          ($this->Tens[0]->C->Total +
+          $this->Tens[1]->C->Total +
+          $this->Tens[2]->C->Total +
+          $this->Tens[3]->C->Total +
+          $this->Tens[4]->C->Total +
+          $this->Tens[5]->C->Total +
+          $this->Tens[6]->C->Total +
+          $this->Tens[7]->C->Total)
+      );
+
+      $this->Unified[1]['NW'] = round(
+        ($this->Tens[8]->NW->Rating * $this->Tens[8]->NW->Total +
+        $this->Tens[9]->NW->Rating * $this->Tens[9]->NW->Total) /
+          ($this->Tens[8]->NW->Total +
+          $this->Tens[9]->NW->Total)
+      );
+
+      $this->Unified[1]['NE'] = round(
+        ($this->Tens[8]->NE->Rating * $this->Tens[8]->NE->Total +
+        $this->Tens[9]->NE->Rating * $this->Tens[9]->NE->Total) /
+          ($this->Tens[8]->NE->Total +
+          $this->Tens[9]->NE->Total)
+      );
+
+      $this->Unified[1]['SE'] = round(
+        ($this->Tens[8]->SE->Rating * $this->Tens[8]->SE->Total +
+        $this->Tens[9]->SE->Rating * $this->Tens[9]->SE->Total) /
+          ($this->Tens[8]->SE->Total +
+          $this->Tens[9]->SE->Total)
+      );
+
+      $this->Unified[1]['SW'] = round(
+        ($this->Tens[8]->SW->Rating * $this->Tens[8]->SW->Total +
+        $this->Tens[9]->SW->Rating * $this->Tens[9]->SW->Total) /
+          ($this->Tens[8]->SW->Total +
+          $this->Tens[9]->SW->Total)
+      );
+
+      $this->Unified[1]['C'] = round(
+        ($this->Tens[8]->C->Rating * $this->Tens[8]->C->Total +
+        $this->Tens[9]->C->Rating * $this->Tens[9]->C->Total) /
+          ($this->Tens[8]->C->Total +
+          $this->Tens[9]->C->Total)
+      );
+
     }
 
   }

@@ -14,3 +14,19 @@ Make sure that the following prerequisites have been fulfilled:
 # Usage
 Inside the *Data* folder, create a subfolder for running this test. Put all the ZebraLab tracking images into this folder. Now navigate to the Picalyzer website on your webserver (like *http://localhost/Picalyzer/*). If everything is fine you should see a simple list with the names of all of the folders inside the *Data* directory. After you click on one of the links to the subfolders, the script starts running. Don't interrupt it, as it could take a lot of time, depending on the number of images inside the directory.
 Once it's done, you get the result of the analyzation process.
+
+# Result
+On the results page you will have 4 pictures for each source picture.
+* The left one is the same as the source picture but cropped to the borders of the red tracking circle.
+* The second one is the working copy of the first image and that cropped by white borders with the black circle and cross placed on top.
+* The third picture shows you the activity zones where the fish swum. It's fragmented into the four directions (north-west, north-east, south-east and south-west) and ten circles of same size. Every zone get's filled by an activity color code (see below).
+* The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture.
+
+![Pattern with almost no activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/NoActivity.png)
+![Pattern with low activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/LowActivity.png)
+![Pattern with medium activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/MediumActivity.png)
+![Pattern with high activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/HighActivity.png)
+
+# Calculations
+
+## Detecting the real well size
