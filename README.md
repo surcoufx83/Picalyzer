@@ -49,4 +49,7 @@ The colors used:
     * the pixel behind is also colored
     * the pixel in front is also colored
     * the relative distance to the center is less then 98% (100% = half height of the picture)
-  * or the relative distance to the center is less then 60% (100% = half height of the picture)
+  * or the relative distance to the center is less then 60% (100% = half height of the picture) -> If this occurs, detection is failed.
+2. If one of the eight directions failed, then nothing will be changed and the detection is done.
+3. If none of the directions fails, the next step will be executed. For the detected colored pixels of the four directions (top center, center right, bottom center, center left) the script will compare their X (left/right) or Y (top/bottom) coordinate with their direct neighbor (Y of top center will be compared with Y of top left and top right). If this point is closer to the center of the picture than the average of all three values, it will be moved outside.
+4. After that, the working copy of the image is cropped to match the new coordinates. This image of the working copy will be the second result picture of the output data.
