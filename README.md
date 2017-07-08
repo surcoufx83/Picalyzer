@@ -24,10 +24,10 @@ On the results page you will have 4 pictures for each source picture.
 
 ## Resulting activity levels
 The animals activity level in the output images and data is emphasized by four different colors. Internally they are represented by numbers.
-0. White (#FFFFFF) - (Almost) no activity
-1. Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
-2. Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
-3. Black (#000000) - High activity with fast movement
+* 0 = White (#FFFFFF) - (Almost) no activity
+* 1 = Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
+* 2 = Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
+* 3 = Black (#000000) - High activity with fast movement
 
 ## Result patterns with very low activity
 ![Pattern with almost no activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/NoActivity.png)
@@ -71,12 +71,12 @@ To collect all movement data from the images, the script will run the following 
   * Moving
   * NotMoving
   * Total
- ... and will be raised depending on the RGB color of the pixel:
+... and will be raised depending on the RGB color of the pixel:
   * Black pixel:
-   * Black + 1
-   * NotEmpty + 1
-   * NotMoving + 1
-   * Total + 1
+    * Black + 1
+    * NotEmpty + 1
+    * NotMoving + 1
+    * Total + 1
   * Green pixel:
     * Green + 1
     * NotEmpty + 1
