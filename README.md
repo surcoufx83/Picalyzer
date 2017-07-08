@@ -93,16 +93,16 @@ To collect all movement data from the images, the script will run the following 
     * NotMoving + 1
     * Total + 1
 5. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions. The first matching rule of the following ruleset is applied (see ## Resulting activity levels for the level identifiers).
-  1. If no colored pixel has been found, then activity level 0.
-  2. If black (inactive) is greater than the sum of green and red, then activity level 0.
-  3. If empty is more than 90% of total, then activity 0.
-  4. If slow movement (green) and fast movement (red) are both above 33% of NotEmpty, then activity level 2.
-  5. If green is greater than red, then activity level 1.
-  6. Activity level 3.
+  * If no colored pixel has been found, then activity level 0.
+  * If black (inactive) is greater than the sum of green and red, then activity level 0.
+  * If empty is more than 90% of total, then activity 0.
+  * If slow movement (green) and fast movement (red) are both above 33% of NotEmpty, then activity level 2.
+  * If green is greater than red, then activity level 1.
+  * Activity level 3.
 6. If the activity level is 1 or higher the following rules will be applied:
-  1. If NotEmpty is less then 20% of Total, then activity level = activity level - 2.
-  2. Else If NotEmpty is less then 40% of Total, then activity level = activity level - 1.
-  3. If activity level is below 1, then activity level is set to 1.
+  * If NotEmpty is less then 20% of Total, then activity level = activity level - 2.
+  * Else If NotEmpty is less then 40% of Total, then activity level = activity level - 1.
+  * If activity level is below 1, then activity level is set to 1.
 7. Now as we have the activity level for all 40 zones (10 distance levels * 4 directions), it's time to calculate the activity levels for the simplified pattern:
   * For the four directions in the inner zone the activity level is the weighted arithmetic median of the seven (96 well plate) / eight (other well plates) distance levels of the same direction.
   * For the four directions in the outer zone the activity level is the weighted arithmetic median of the three (96 well plate) / two (other well plates) distance levels of the same direction.
