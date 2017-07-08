@@ -22,11 +22,12 @@ On the results page you will have 4 pictures for each source picture.
 * The third picture shows you the activity zones where the fish swum. It's fragmented into the four directions (top left, top right, bottom right, bottom left) and ten circles of same size. Every zone get's filled by an activity color code (see below).
 * The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture. 96-well plates are separated after zone seven.
 
-The colors used:
-* White (#FFFFFF) - (Almost) no activity
-* Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
-* Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
-* Black (#000000) - High activity with fast movement
+## Resulting activity levels
+The animals activity level in the output images and data is emphasized by four different colors. Internally they are represented by numbers.
+0. White (#FFFFFF) - (Almost) no activity
+1. Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
+2. Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
+3. Black (#000000) - High activity with fast movement
 
 ## Result patterns with very low activity
 ![Pattern with almost no activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/NoActivity.png)
@@ -53,3 +54,42 @@ The colors used:
 2. If one of the eight directions failed, then nothing will be changed and the detection is done.
 3. If none of the directions fails, the next step will be executed. For the detected colored pixels of the four directions (top center, center right, bottom center, center left) the script will compare their X (left/right) or Y (top/bottom) coordinate with their direct neighbor (Y of top center will be compared with Y of top left and top right). If this point is closer to the center of the picture than the average of all three values, it will be moved outside.
 4. After that, the working copy of the image is cropped to match the new coordinates. This image of the working copy will be the second result picture of the output data.
+
+![Radius](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/Radius.png)
+
+## Detecting the activity level
+To collect all movement data from the images, the script will run the following procedure:
+1. Detect the RGB color, the coordinates, the direction from center and the distance to the center of every pixel of the image. Whenever distance is used it means the relative distance to the center of the image on a straight line where the radius equals 100%.
+2. If the distance is larger than 99% (corners of the image outside the circle), nothing happens.
+3. For every distance level ([0...9] = 0-9%, 10-19%, ...) and the four directions (top right, bottom right, bottom left, top left) the following counters exits:
+  * Black
+  * Green
+  * Red
+  * White
+  * Empty
+  * NotEmpty
+  * Moving
+  * NotMoving
+  * Total
+ ... and will be raised depending on the RGB color of the pixel:
+  * Black pixel:
+   * Black + 1
+   * NotEmpty + 1
+   * NotMoving + 1
+   * Total + 1
+  * Green pixel:
+    * Green + 1
+    * NotEmpty + 1
+    * Moving + 1
+    * Total + 1
+  * Red pixel:
+    * Red + 1
+    * NotEmpty + 1
+    * NotMoving + 1
+    * Total + 1
+  * White pixel:
+    * White + 1
+    * Empty + 1
+    * NotMoving + 1
+    * Total + 1
+4. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions.
