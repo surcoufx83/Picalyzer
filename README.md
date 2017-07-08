@@ -92,7 +92,7 @@ To collect all movement data from the images, the script will run the following 
     * Empty + 1
     * NotMoving + 1
     * Total + 1
-5. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions. The first matching rule of the following ruleset is applied (see ## Resulting activity levels for the level identifiers).
+5. If any pixel inside the circle has been registered this way, the activity level gets calculated for each distance level and directions. The first matching rule of the following ruleset is applied (see [Resulting activity levels](#resulting-activity-levels) for the level identifiers).
   * If no colored pixel has been found, then activity level 0.
   * If black (inactive) is greater than the sum of green and red, then activity level 0.
   * If empty is more than 90% of total, then activity 0.
