@@ -22,9 +22,22 @@ On the results page you will have 4 pictures for each source picture.
 * The third picture shows you the activity zones where the fish swum. It's fragmented into the four directions (north-west, north-east, south-east and south-west) and ten circles of same size. Every zone get's filled by an activity color code (see below).
 * The last image is like the third one but with only two zones for every direction. The inner zone represents the inner eight zones of the third picture, the outer zone the two other zones of the third picture.
 
+The colors used:
+* White (#FFFFFF) - (Almost) no activity
+* Light Gray (#AAAAAA) - Activity with low speed or low activity with high speed
+* Dark Gray (#555555) - Medium activity (a mix of fast and slow movement)
+* Black - High activity with fast movement
+
+## Result patterns with very low activity
 ![Pattern with almost no activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/NoActivity.png)
+
+## Result patterns with low activiy
 ![Pattern with low activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/LowActivity.png)
+
+## Result patterns with medium activity
 ![Pattern with medium activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/MediumActivity.png)
+
+## Result patterns with high activity
 ![Pattern with high activity](https://raw.githubusercontent.com/surcoufx83/Picalyzer/master/Pictures/HighActivity.png)
 
 # Calculations
