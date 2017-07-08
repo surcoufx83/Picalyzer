@@ -59,7 +59,7 @@ The animals activity level in the output images and data is emphasized by four d
 
 ## Detecting the activity level
 To collect all movement data from the images, the script will run the following procedure:
-1. Detect the RGB color, the coordinates, the direction from center and the distance to the center of every pixel of the image. Whenever distance is used it means the relative distance to the center of the image on a straight line where the radius equals 100%.
+1. Detect the RGB color, the coordinates, the direction from center and the distance to the center of every pixel of the image. Whenever distance is used it means the relative distance to the center of the image on a straight line while the radius of the image equals 100%.
 2. If the distance is larger than 99% (corners of the image outside the circle), nothing happens.
 3. For every distance level ([0...9] = 0-9%, 10-19%, ...) and the four directions (top right, bottom right, bottom left, top left) the following counters exits:
   * Black
