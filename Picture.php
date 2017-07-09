@@ -6,14 +6,17 @@ class Pic {
 
   public $Exists = false;
   public $Basename, $Filename, $Folderpath, $Extension, $Fullpath;
-  public $Experiment, $SubExperiment, $Description, $Y, $X, $ImageIndex;
+  public $Experiment, $SubExperiment, $Description, $Y, $X, $ImageIndex, $Group = null;
   public $Filesize, $Width, $Height;
   public $Wellplate, $Wellsize, $Center, $Radius;
   public $Counter;
 
+  public $FilenameOrigin, $FilenameWorking, $Filename2Circle, $Filename10Circle;
+
   private $WorkingCopy;
 
   function __construct($sPath) {
+    global $Groups;
     if (!file_exists($sPath)) {
       $this->Exists = false;
       return;
@@ -40,7 +43,17 @@ class Pic {
       $this->Y = $aPregOut['Y'];
       $this->X = intval($aPregOut['X']);
       $this->ImageIndex = intval($aPregOut['Image']);
+      for ($i=0; $i<count($Groups); $i++) {
+        if ($this->X >= $Groups[$i]->From && $this->X <= $Groups[$i]->Until) {
+          $this->Group =& $Groups[$i];
+        }
+      }
     }
+
+    $this->FilenameOrigin = WORKING_DIR.$this->Basename;
+    $this->FilenameWorking = WORKING_DIR.$this->Filename.'-working.png';
+    $this->Filename2Circle = WORKING_DIR.$this->Filename.'-2circle.png';
+    $this->Filename10Circle = WORKING_DIR.$this->Filename.'-10circle.png';
 
     $this->_CreateWorkingCopy();
     $this->Counter = new Counter($this->Wellplate);
@@ -54,14 +67,14 @@ class Pic {
     $iDraw->line($this->Center[0], $this->Center[1] - $this->Radius, $this->Center[0], $this->Center[1] + $this->Radius);
     $iDraw->line($this->Center[0] - $this->Radius, $this->Center[1], $this->Center[0] + $this->Radius, $this->Center[1]);
     $this->WorkingCopy->drawImage($iDraw);
-    $this->WorkingCopy->writeImage(WORKING_DIR.$this->Filename.'-working.png');
+    $this->WorkingCopy->writeImage($this->FilenameWorking);
     $iDraw->destroy();
 
   }
 
   private function _CreateWorkingCopy() {
-    copy($this->Fullpath, WORKING_DIR.$this->Basename);
-    $this->WorkingCopy = new Imagick(WORKING_DIR.$this->Basename);
+    copy($this->Fullpath, $this->FilenameOrigin);
+    $this->WorkingCopy = new Imagick($this->FilenameOrigin);
     $this->WorkingCopy->setImageMatte(true);
     $this->_CropWorkingCopy();
   }
@@ -116,7 +129,7 @@ class Pic {
     // no starting with the real working copy
     $this->WorkingCopy->cropImage($rad * 2 - 2, $rad * 2 - 2, $center[0] - $rad + 1, $center[1] - $rad + 2);
     $this->WorkingCopy->setImagePage(0,0,0,0);
-    $this->WorkingCopy->writeImage(WORKING_DIR.$this->Filename.'-working.png');
+    $this->WorkingCopy->writeImage($this->FilenameWorking);
     //$this->WorkingCopy->writeImage();
     $this->Wellsize = [$this->WorkingCopy->getImageWidth(), $this->WorkingCopy->getImageHeight()];
     $this->Center = [intval($this->Wellsize[0] / 2), intval($this->Wellsize[1] / 2)];
@@ -137,7 +150,7 @@ class Pic {
     $oTemp->drawImage($oDraw);
 
     $this->WorkingCopy->compositeImage($oTemp, Imagick::COMPOSITE_DSTIN, 0, 0);
-    $this->WorkingCopy->writeImage(WORKING_DIR.$this->Filename.'-working.png');
+    $this->WorkingCopy->writeImage($this->FilenameWorking);
 
     $oDraw->destroy();
     $oTemp->clear();
@@ -190,7 +203,7 @@ class Pic {
 
     $this->WorkingCopy->cropImage($center['W2E']['Dist'], $center['N2S']['Dist'], $marker['W'][0], $marker['N'][1]);
     $this->WorkingCopy->setImagePage(0,0,0,0);
-    $this->WorkingCopy->writeImage(WORKING_DIR.$this->Filename.'-working.png');
+    $this->WorkingCopy->writeImage($this->FilenameWorking);
   }
 
   function _GetRadialMarker(string $sDir) {
@@ -282,6 +295,11 @@ class Pic {
     }
   }
 
+  function CreateImages(int $iMask) {
+    $this->CreateTwinsImage();
+    $this->CreateTensImage();
+  }
+
   function CreateTensImage() {
 
     $iMgck = new Imagick();
@@ -314,10 +332,9 @@ class Pic {
     $iDraw->line($this->Center[0] - $this->Radius, $this->Center[1], $this->Center[0] + $this->Radius, $this->Center[1]);
 
     $iMgck->drawImage($iDraw);
-    $iMgck->writeImage(WORKING_DIR.$this->Filename.'-10circle.png');
+    $iMgck->writeImage($this->Filename10Circle);
     $iDraw->destroy();
     $iMgck->clear();
-    return $this->Filename.'-10circle.png';
   }
 
   function CreateTwinsImage() {
@@ -348,10 +365,9 @@ class Pic {
     $iDraw->line($this->Center[0] - $this->Radius, $this->Center[1], $this->Center[0] + $this->Radius, $this->Center[1]);
 
     $iMgck->drawImage($iDraw);
-    $iMgck->writeImage(WORKING_DIR.$this->Filename.'-2circle.png');
+    $iMgck->writeImage($this->Filename2Circle);
     $iDraw->destroy();
     $iMgck->clear();
-    return $this->Filename.'-2circle.png';
   }
 
 }

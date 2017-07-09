@@ -15,6 +15,14 @@ Make sure that the following prerequisites have been fulfilled:
 Inside the *Data* folder, create a subfolder for running this test. Put all the ZebraLab tracking images into this folder. Now navigate to the Picalyzer website on your webserver (like *http://localhost/Picalyzer/*). If everything is fine you should see a simple list with the names of all of the folders inside the *Data* directory. After you click on one of the links to the subfolders, the script starts running. Don't interrupt it, as it could take a lot of time, depending on the number of images inside the directory.
 Once it's done, you get the result of the analyzation process.
 
+## Groups
+To get animals grouped you must append **&Groups=["Control":1:2;"25mg":3:4;"50mg":5:6]** to the analyzing process url like *http://localhost/Picalyzer/analyze.php?Folder=test&Groups=["Control":1:2;"25mg":3:4;"50mg":5:6]*.
+The syntax is always:
+* [ - opening bracket
+* "Groupname": - Your name for the group in quotation marks followed by colon
+* 1:2 - The start end end column for this group. On a 24 well plate you have 6 columns (1...6), so 1:2 means the first to columns of the plate.
+
+
 # Result
 On the results page you will have 4 pictures for each source picture.
 * The left one is the same as the source picture but cropped to the borders of the red tracking circle.

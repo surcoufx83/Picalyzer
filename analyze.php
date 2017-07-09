@@ -11,6 +11,7 @@ define('COL_MIXED', '#555555');
 define('COL_FAST', '#000000');
 define('DEBUG', (array_key_exists('DevInfo', $_GET)));
 
+require_once 'PlotGroup.php';
 require_once 'Functions.php';
 require_once 'Counter.php';
 require_once 'Picture.php';
@@ -24,6 +25,13 @@ if (!is_dir($sPath)) {
 
 if (!array_key_exists('Circles', $_GET))
   $_GET['Circles'] = 12;
+
+$bUseGroups = false;
+$Groups = array();
+if (array_key_exists('Groups', $_GET)) {
+  $bUseGroups = true;
+  CheckoutGroups($_GET['Groups']);
+}
 
 $aExperiments = array();
 if ($handle = opendir($sPath)) {
@@ -68,14 +76,24 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
     $htmlout .= '<tr><th>'.$y.'</th>';
 
     foreach ($yData AS $x => $xData) {
-      $htmlout .= '<td>'.$x.'<br />';
+      $htmlout .= '<td>';
       sort($xData);
 
       for ($i=0; $i<count($xData); $i++) {
-        if (count($xData) != 1)
-          $htmlout .= '<h3>'.$xData[$i].'</h3><br />';
 
-        $sp = extractPicture($xData[$i]);
+        $pObj = loadPicture($xData[$i]);
+        $pObj->CreateImages($_GET['Circles']);
+
+        $htmlout .= ($pObj->Group != null ? '<span style="font-weight:bold;">Group: '.$pObj->Group->Name.'</span><br />' : '');
+        $htmlout .= '<span>'.$pObj->Basename.'</span><br />';
+        $htmlout .= '<div style="white-space:nowrap;">';
+        $htmlout .= '<img src="'.$pObj->FilenameOrigin.'" />';
+        $htmlout .= '<img src="'.$pObj->FilenameWorking.'" />';
+        $htmlout .= '<img src="'.$pObj->Filename10Circle.'" />';
+        $htmlout .= '<img src="'.$pObj->Filename2Circle.'" />';
+
+
+        /*$aPictures = extractPictures($pObj);
         $htmlout .= '<div style="white-space:nowrap;">';
         $htmlout .= '<img src="Work/'.$xData[$i].'" />';
         $htmlout .= '<img src="Work/'.str_replace('.PNG', '-working.png', $xData[$i]).'" />';
@@ -87,7 +105,7 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
             $htmlout .= '<img src="Work/'.$sp[$im].'"/>';
             copy('Work/'.$sp[$im], $tarfolder.'Work/'.$sp[$im]);
           }
-        }
+        }*/
         $htmlout .= '</div><br />';
       }
       $htmlout .= '</td>';
@@ -147,24 +165,11 @@ function addPictureToArray($aPregOut) {
 
 }
 
-function extractPicture($sFilename) {
+function loadPicture($sFilename) {
   global $sPath, $sTemp;
   $sFile = rtrim($sPath, '/').'/'.$sFilename;
-
   $pic = new Pic($sFile);
   if (!$pic->Exists)
     return null;
-
-  $sOut = array();
-  if ($_GET['Circles'] == 2) {
-    $sOut[] = $pic->CreateTwinsImage();
-  } elseif ($_GET['Circles'] == 10) {
-    $sOut[] = $pic->CreateTensImage();
-  } else {
-    $sOut[] = $pic->CreateTensImage();
-    $sOut[] = $pic->CreateTwinsImage();
-  }
-
-  return $sOut;
-
+  return $pic;
 }

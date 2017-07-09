@@ -1,5 +1,16 @@
 <?php
 
+function CheckoutGroups(string $sGroups) {
+  global $Groups;
+  $sGroups = ltrim(rtrim($sGroups, ']'), '[');
+  $aGroups = explode(';', $sGroups);
+  for ($i=0; $i<count($aGroups); $i++) {
+    if (preg_match('/("(?<Name>[0-9a-z]+)":)?(?<From>[0-9]+):(?<Until>[0-9]+)/i', $aGroups[$i], $matches)) {
+      array_push($Groups, new Group(count($Groups), $matches));
+    }
+  }
+}
+
 function GetDistanceToCenter(int $x, int $y, int $xCenter, int $yCenter) { // distanz hochgerechnet auf einen radius von 100
   return (sqrt((abs($x - $xCenter) ** 2) + (abs($y - $yCenter) ** 2))) * 100 / $xCenter;
 }
