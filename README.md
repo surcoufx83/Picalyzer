@@ -18,9 +18,12 @@ Once it's done, you get the result of the analyzation process.
 ## Groups
 To get animals grouped you must append **&Groups=["Control":1:2;"25mg":3:4;"50mg":5:6]** to the analyzing process url like *http://localhost/Picalyzer/analyze.php?Folder=test&Groups=["Control":1:2;"25mg":3:4;"50mg":5:6]*.
 The syntax is always:
+* &Groups= - To tell the script, that the groups definition is coming next.
 * [ - opening bracket
-* "Groupname": - Your name for the group in quotation marks followed by colon
-* 1:2 - The start end end column for this group. On a 24 well plate you have 6 columns (1...6), so 1:2 means the first to columns of the plate.
+* As often as needed, separated by semicolon:
+  * "Groupname": - Your name for the group in quotation marks followed by colon
+  * 1:2 - The start end end column for this group. On a 24 well plate you have 6 columns (1...6), so 1:2 means the first to columns of the plate.
+* ] - closing bracket.
 
 
 # Result
