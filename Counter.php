@@ -16,6 +16,33 @@ class Counter{
     }
   }
 
+  function GetRawData() {
+    $i1Inner = $this->Unified[0]['NW'] + $this->Unified[0]['NE'] + $this->Unified[0]['SE'] + $this->Unified[0]['SW'];
+    $i1Outer = $this->Unified[1]['NW'] + $this->Unified[1]['NE'] + $this->Unified[1]['SE'] + $this->Unified[1]['SW'];
+    $i2Inner = $i1Inner + 4;
+    $i2Outer = $i1Outer + 4;
+
+    $fX = 1.078095 - 2.586236 * exp(-0.875008 * ($i2Outer / $i2Inner));
+    $fX = round($fX, 5);
+    $fY = ($i1Outer + $i1Inner) / 24;
+    $fY = round($fY, 5);
+
+    $sOut = $fX.';'.$fY.';';
+    $sOut .= $this->Tens[0]->NW->GetRawData().';'.$this->Tens[0]->NE->GetRawData().';'.$this->Tens[0]->SE->GetRawData().';'.$this->Tens[0]->SW->GetRawData().';';
+    $sOut .= $this->Tens[1]->NW->GetRawData().';'.$this->Tens[1]->NE->GetRawData().';'.$this->Tens[1]->SE->GetRawData().';'.$this->Tens[1]->SW->GetRawData().';';
+    $sOut .= $this->Tens[2]->NW->GetRawData().';'.$this->Tens[2]->NE->GetRawData().';'.$this->Tens[2]->SE->GetRawData().';'.$this->Tens[2]->SW->GetRawData().';';
+    $sOut .= $this->Tens[3]->NW->GetRawData().';'.$this->Tens[3]->NE->GetRawData().';'.$this->Tens[3]->SE->GetRawData().';'.$this->Tens[3]->SW->GetRawData().';';
+    $sOut .= $this->Tens[4]->NW->GetRawData().';'.$this->Tens[4]->NE->GetRawData().';'.$this->Tens[4]->SE->GetRawData().';'.$this->Tens[4]->SW->GetRawData().';';
+    $sOut .= $this->Tens[5]->NW->GetRawData().';'.$this->Tens[5]->NE->GetRawData().';'.$this->Tens[5]->SE->GetRawData().';'.$this->Tens[5]->SW->GetRawData().';';
+    $sOut .= $this->Tens[6]->NW->GetRawData().';'.$this->Tens[6]->NE->GetRawData().';'.$this->Tens[6]->SE->GetRawData().';'.$this->Tens[6]->SW->GetRawData().';';
+    $sOut .= $this->Tens[7]->NW->GetRawData().';'.$this->Tens[7]->NE->GetRawData().';'.$this->Tens[7]->SE->GetRawData().';'.$this->Tens[7]->SW->GetRawData().';';
+    $sOut .= $this->Tens[8]->NW->GetRawData().';'.$this->Tens[8]->NE->GetRawData().';'.$this->Tens[8]->SE->GetRawData().';'.$this->Tens[8]->SW->GetRawData().';';
+    $sOut .= $this->Tens[9]->NW->GetRawData().';'.$this->Tens[9]->NE->GetRawData().';'.$this->Tens[9]->SE->GetRawData().';'.$this->Tens[9]->SW->GetRawData().';';
+    $sOut .= $this->Unified[0]['NW'].';'.$this->Unified[0]['NE'].';'.$this->Unified[0]['SE'].';'.$this->Unified[0]['SW'].';';
+    $sOut .= $this->Unified[1]['NW'].';'.$this->Unified[1]['NE'].';'.$this->Unified[1]['SE'].';'.$this->Unified[1]['SW'];
+    return $sOut;
+  }
+
   function CountInImage(Imagick $iObj) {
     $_xmax = $iObj->getImageWidth();
     $_ymax = $iObj->getImageHeight();
@@ -454,6 +481,10 @@ class Direction {
           return;
       }
     }
+  }
+
+  function GetRawData() {
+    return $this->White.';'.$this->Black.';'.$this->Green.';'.$this->Red.';'.$this->Rating;
   }
 
 }

@@ -56,11 +56,32 @@ if ($handle = opendir($sPath)) {
 $htmlout = '';
 $now = new DateTime();
 $tarfolder = '__Olds/'.$now->format('Y-m-d_H-i-s').'/';
+$csvfilename = 'rawdata_'.$now->format('Y-m-d_H-i-s').'.csv';
 mkdir($tarfolder.'Work', 0777, true);
 $workstart = time();
+
+$csv = 'Experiment;SubExperiment;Description;Group;Plate-Y;Plate-X;ImageIndex;';
+$csv .= 'Rating-X;Rating-Y;';
+
+$regs = ['TL', 'TR', 'BR', 'BL'];
+$cols = ['White', 'Black', 'Green', 'Red', 'Rating'];
+$csvdet = '';
+for ($i=0; $i<10; $i++) {
+  for ($j=0; $j<4; $j++) {
+    for ($k=0; $k<5; $k++) {
+      $csv .= 'Detail-'.$i.'-'.$regs[$j].'-'.$cols[$k].';';
+    }
+    if ($i<2)
+      $csvdet .= 'Simple-'.$i.'-'.$regs[$j].'-Rating;';
+  }
+}
+$csv .= $csvdet."\r\n";
+
 $htmlout .= '<html><head></head><body>';
-$htmlout .= '<p>Cached version of this file: <a href="'.$tarfolder.'result.html">'.$tarfolder.'result.html</a></p>';
+$htmlout .= '<p>Cached version of this file: <a href="'.$tarfolder.'result.html">'.$tarfolder.'result.html</a>.<br />';
+$htmlout .= 'The raw data can be found in this file: <a href="Work/'.$csvfilename.'">Work/'.$csvfilename.'</a></p>';
 $htmlout .= '<p style="font-size:80%;">Page and images created in [duration].</p>';
+
 
 ksort($aExperiments);
 foreach ($aExperiments AS $sExperimentName => $aData) {
@@ -82,7 +103,7 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
       for ($i=0; $i<count($xData); $i++) {
 
         $pObj = loadPicture($xData[$i]);
-        $pObj->CreateImages($_GET['Circles']);
+        $pObj->CreateImages($_GET['Circles'], $tarfolder);
 
         $htmlout .= ($pObj->Group != null ? '<span style="font-weight:bold;">Group: '.$pObj->Group->Name.'</span><br />' : '');
         $htmlout .= '<span>'.$pObj->Basename.'</span><br />';
@@ -92,20 +113,8 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
         $htmlout .= '<img src="'.$pObj->Filename10Circle.'" />';
         $htmlout .= '<img src="'.$pObj->Filename2Circle.'" />';
 
+        $csv .= $pObj->GetRawData()."\r\n";
 
-        /*$aPictures = extractPictures($pObj);
-        $htmlout .= '<div style="white-space:nowrap;">';
-        $htmlout .= '<img src="Work/'.$xData[$i].'" />';
-        $htmlout .= '<img src="Work/'.str_replace('.PNG', '-working.png', $xData[$i]).'" />';
-        copy('Work/'.$xData[$i], $tarfolder.'Work/'.$xData[$i]);
-        copy('Work/'.str_replace('.PNG', '-working.png', $xData[$i]), $tarfolder.'Work/'.str_replace('.PNG', '-working.png', $xData[$i]));
-
-        if (is_array($sp)) {
-          for ($im = 0; $im<count($sp); $im++) {
-            $htmlout .= '<img src="Work/'.$sp[$im].'"/>';
-            copy('Work/'.$sp[$im], $tarfolder.'Work/'.$sp[$im]);
-          }
-        }*/
         $htmlout .= '</div><br />';
       }
       $htmlout .= '</td>';
@@ -117,6 +126,10 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
   //break;
 }
 $htmlout .= '</body></html>';
+
+file_put_contents('Work/'.$csvfilename, $csv);
+copy('Work/'.$csvfilename, $tarfolder.'Work/'.$csvfilename);
+
 $dur = time() - $workstart;
 $sDur = '';
 if ($dur >= 3600) {

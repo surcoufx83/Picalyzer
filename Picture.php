@@ -50,6 +50,9 @@ class Pic {
       }
     }
 
+    if ($this->SubExperiment == null)
+      $this->SubExperiment = 0;
+
     $this->FilenameOrigin = WORKING_DIR.$this->Basename;
     $this->FilenameWorking = WORKING_DIR.$this->Filename.'-working.png';
     $this->Filename2Circle = WORKING_DIR.$this->Filename.'-2circle.png';
@@ -295,9 +298,19 @@ class Pic {
     }
   }
 
-  function CreateImages(int $iMask) {
+  function CreateImages(int $iMask, string $sTargetFolder) {
     $this->CreateTwinsImage();
     $this->CreateTensImage();
+    copy(WORKING_DIR.$this->Basename, $sTargetFolder.'Work/'.$this->Basename);
+    copy(WORKING_DIR.$this->Filename.'-working.png', $sTargetFolder.'Work/'.$this->Filename.'-working.png');
+    copy(WORKING_DIR.$this->Filename.'-2circle.png', $sTargetFolder.'Work/'.$this->Filename.'-2circle.png');
+    copy(WORKING_DIR.$this->Filename.'-10circle.png', $sTargetFolder.'Work/'.$this->Filename.'-10circle.png');
+  }
+
+  function GetRawData() {
+    $sOut = $this->Experiment.';'.$this->SubExperiment.';'.$this->Description.';'.($this->Group == null ? '' : $this->Group->Name).';';
+    $sOut .= $this->Y.';'.$this->X.';'.$this->ImageIndex.';'.$this->Counter->GetRawData();
+    return $sOut;
   }
 
   function CreateTensImage() {
