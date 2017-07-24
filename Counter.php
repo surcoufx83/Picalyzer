@@ -24,7 +24,7 @@ class Counter{
 
     $fX = 1.078095 - 2.586236 * exp(-0.875008 * ($i2Outer / $i2Inner));
     $fX = round($fX, 5);
-    $fY = ($i1Outer + $i1Inner) / 24;
+    $fY = max($i1Outer, $i1Inner) / 12;
     $fY = round($fY, 5);
 
     $sOut = $fX.';'.$fY.';';
