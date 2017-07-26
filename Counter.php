@@ -22,7 +22,13 @@ class Counter{
     $i2Inner = $i1Inner + 4;
     $i2Outer = $i1Outer + 4;
 
-    $fX = 1.078095 - 2.586236 * exp(-0.875008 * ($i2Outer / $i2Inner));
+    $iSum = $i2Inner + $i2Outer;
+    $iFactor = (($this->Unified[0]['NW'] + $this->Unified[1]['NW']) / $iSum) *
+               (($this->Unified[0]['NE'] + $this->Unified[1]['NE']) / $iSum) *
+               (($this->Unified[0]['SE'] + $this->Unified[1]['SE']) / $iSum) *
+               (($this->Unified[0]['SW'] + $this->Unified[1]['SW']) / $iSum);
+    $iFactor *= 256;
+    $fX = 1.1384332 - 2.297894 * exp(-0.70234011 * ($i2Outer / $i2Inner * $iFactor));
     $fX = round($fX, 5);
     $fY = max($i1Outer, $i1Inner) / 12;
     $fY = round($fY, 5);
