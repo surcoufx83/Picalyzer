@@ -61,7 +61,7 @@ mkdir($tarfolder.'Work', 0777, true);
 $workstart = time();
 
 $csv = 'Experiment;SubExperiment;Description;Group;Plate-Y;Plate-X;ImageIndex;';
-$csv .= 'Rating-X;Rating-Y;';
+$csv .= 'Rating-X;Rating-Y;Rating-Z;Relative-X;Relative-Y;Relative-Z;';
 
 $regs = ['TL', 'TR', 'BR', 'BL'];
 $cols = ['White', 'Black', 'Green', 'Red', 'Rating'];
@@ -104,14 +104,22 @@ foreach ($aExperiments AS $sExperimentName => $aData) {
 
         $pObj = loadPicture($xData[$i]);
         $pObj->CreateImages($_GET['Circles'], $tarfolder);
+        $pObj->Counter->CalculateRating();
 
-        $htmlout .= ($pObj->Group != null ? '<span style="font-weight:bold;">Group: '.$pObj->Group->Name.'</span><br />' : '');
-        $htmlout .= '<span>'.$pObj->Basename.'</span><br />';
-        $htmlout .= '<div style="white-space:nowrap;">';
+        $htmlout .= ($pObj->Group != null ? '<div style="font-weight:bold;">Group: '.$pObj->Group->Name.'</div>' : '');
+        $htmlout .= '<div>'.$pObj->Basename.'</div>';
+        $htmlout .= '<div style="white-space:nowrap; margin-top:10px;">';
         $htmlout .= '<img src="'.$pObj->FilenameOrigin.'" />';
         $htmlout .= '<img src="'.$pObj->FilenameWorking.'" />';
         $htmlout .= '<img src="'.$pObj->Filename10Circle.'" />';
-        $htmlout .= '<img src="'.$pObj->Filename2Circle.'" />';
+        $htmlout .= '<img src="'.$pObj->Filename2Circle.'" /></div>';
+        $htmlout .= '<div style="font-size:90%; margin-top:10px;">Rating XYZ: '.$pObj->Counter->X.', '.$pObj->Counter->Y.', '.$pObj->Counter->Z.'</div>';
+        $htmlout .= '<div style="font-size:90%;">Relative XYZ: '.($pObj->Counter->X * 100).', '.($pObj->Counter->Y * 100).', '.($pObj->Counter->Z * 100).'</div>';
+        $htmlout .= '<div style="font-size:90%;">Dots: '
+          .($pObj->Counter->Unified[1]['NW'] + 1).($pObj->Counter->Unified[0]['NW'] + 1)
+          .($pObj->Counter->Unified[1]['NE'] + 1).($pObj->Counter->Unified[0]['NE'] + 1)
+          .($pObj->Counter->Unified[1]['SE'] + 1).($pObj->Counter->Unified[0]['SE'] + 1)
+          .($pObj->Counter->Unified[1]['SW'] + 1).($pObj->Counter->Unified[0]['SW'] + 1).'</div>';
 
         $csv .= $pObj->GetRawData()."\r\n";
 

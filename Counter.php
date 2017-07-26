@@ -4,6 +4,7 @@ class Counter{
 
   public $Tens = array();
   public $Unified = array();
+  public $X = 0, $Y = 0, $Z = 0, $F = 0;
   private $Plate = 0;
   private $ImageCenter;
 
@@ -17,23 +18,7 @@ class Counter{
   }
 
   function GetRawData() {
-    $i1Inner = $this->Unified[0]['NW'] + $this->Unified[0]['NE'] + $this->Unified[0]['SE'] + $this->Unified[0]['SW'];
-    $i1Outer = $this->Unified[1]['NW'] + $this->Unified[1]['NE'] + $this->Unified[1]['SE'] + $this->Unified[1]['SW'];
-    $i2Inner = $i1Inner + 4;
-    $i2Outer = $i1Outer + 4;
-
-    $iSum = $i2Inner + $i2Outer;
-    $iFactor = (($this->Unified[0]['NW'] + $this->Unified[1]['NW']) / $iSum) *
-               (($this->Unified[0]['NE'] + $this->Unified[1]['NE']) / $iSum) *
-               (($this->Unified[0]['SE'] + $this->Unified[1]['SE']) / $iSum) *
-               (($this->Unified[0]['SW'] + $this->Unified[1]['SW']) / $iSum);
-    $iFactor *= 256;
-    $fX = 1.1384332 - 2.297894 * exp(-0.70234011 * ($i2Outer / $i2Inner * $iFactor));
-    $fX = round($fX, 5);
-    $fY = max($i1Outer, $i1Inner) / 12;
-    $fY = round($fY, 5);
-
-    $sOut = $fX.';'.$fY.';';
+    $sOut = $this->X.';'.$this->Y.';'.$this->Z.';'.($this->X * 100).';'.($this->Y * 100).';'.($this->Z * 100).';';
     $sOut .= $this->Tens[0]->NW->GetRawData().';'.$this->Tens[0]->NE->GetRawData().';'.$this->Tens[0]->SE->GetRawData().';'.$this->Tens[0]->SW->GetRawData().';';
     $sOut .= $this->Tens[1]->NW->GetRawData().';'.$this->Tens[1]->NE->GetRawData().';'.$this->Tens[1]->SE->GetRawData().';'.$this->Tens[1]->SW->GetRawData().';';
     $sOut .= $this->Tens[2]->NW->GetRawData().';'.$this->Tens[2]->NE->GetRawData().';'.$this->Tens[2]->SE->GetRawData().';'.$this->Tens[2]->SW->GetRawData().';';
@@ -47,6 +32,26 @@ class Counter{
     $sOut .= $this->Unified[0]['NW'].';'.$this->Unified[0]['NE'].';'.$this->Unified[0]['SE'].';'.$this->Unified[0]['SW'].';';
     $sOut .= $this->Unified[1]['NW'].';'.$this->Unified[1]['NE'].';'.$this->Unified[1]['SE'].';'.$this->Unified[1]['SW'];
     return $sOut;
+  }
+
+  function CalculateRating() {
+    $i1Inner = $this->Unified[0]['NW'] + $this->Unified[0]['NE'] + $this->Unified[0]['SE'] + $this->Unified[0]['SW'];
+    $i1Outer = $this->Unified[1]['NW'] + $this->Unified[1]['NE'] + $this->Unified[1]['SE'] + $this->Unified[1]['SW'];
+    $i2Inner = $i1Inner + 4;
+    $i2Outer = $i1Outer + 4;
+    $iSum = $i2Inner + $i2Outer;
+    $iFactor = (($this->Unified[0]['NW'] + $this->Unified[1]['NW'] + 2) / $iSum) *
+               (($this->Unified[0]['NE'] + $this->Unified[1]['NE'] + 2) / $iSum) *
+               (($this->Unified[0]['SE'] + $this->Unified[1]['SE'] + 2) / $iSum) *
+               (($this->Unified[0]['SW'] + $this->Unified[1]['SW'] + 2) / $iSum);
+    $iFactor *= 256;
+    $fX = 1.1384332 - 2.297894 * exp(-0.70234011 * ($i2Outer / $i2Inner));
+    $this->X = round($fX, 5);
+    $fY = max($i1Outer, $i1Inner) / 12;
+    $this->Y = round($fY, 5);
+    $fZ = -1.693767 * $iFactor + 1.693767;
+    $this->Z = round($fZ, 5);
+    $this->F = round($iFactor, 5);
   }
 
   function CountInImage(Imagick $iObj) {
